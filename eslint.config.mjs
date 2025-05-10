@@ -19,8 +19,6 @@ const eslintConfig = [
       'linebreak-style': ['error', 'unix'],
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-      'no-console': ['warn', { allow: ['warn', 'error'] }],
-      quotes: ['error', 'single'],
       'object-curly-spacing': ['error', 'always'],
       'prefer-const': 'error',
     },
