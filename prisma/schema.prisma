@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -14,10 +13,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ImportanceLevel {
+  One
+  Two
+  Three
+}
+
 model Record {
-  id               Int      @id @default(autoincrement())
+  id               Int             @id @default(autoincrement())
   title            String
   description      String
-  importante_level Int?     @default(1)
-  createdAt        DateTime @default(now())
+  importance_level ImportanceLevel? @default(One)
+  createdAt        DateTime        @default(now())
 }
