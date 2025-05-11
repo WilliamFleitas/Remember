@@ -23,8 +23,8 @@ export default function NavRoutes () {
         <Link
           key={item.path}
           href={item.path}
-          className={`font-semibold text-[1.1rem] hover:text-[#5f014f] transition-colors ${
-            pathname === item.path ? 'text-[#5f014f] font-bold' : ''
+          className={`font-semibold text-[1.1rem] hover:text-primary-decoration transition-colors ${
+            pathname === item.path ? 'text-primary-decoration font-bold' : ''
           }`}
         >
           {item.name}

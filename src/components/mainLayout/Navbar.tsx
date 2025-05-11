@@ -10,7 +10,7 @@ import NavRoutes from './NavbarAssets/NavRoutes'
 
 export default function Navbar () {
   return (
-    <header className='flex flex-row w-full h-fit justify-between items-center px-8 py-4 shadow-md border-b border-b-[#5f014f]'>
+    <header className='flex flex-row w-full h-fit justify-between items-center px-8 py-4 shadow-md border-b border-b-primary-decoration'>
       <Link href={'/'} className='text-[1.5rem] font-bold'>
         Remember
       </Link>
