@@ -1,17 +1,14 @@
 import type { Metadata } from 'next'
 import { ClerkProvider } from '@clerk/nextjs'
-import { Geist, Geist_Mono } from 'next/font/google'
-import Navbar from '@/src/components/mainLayout/Navbar'
+import { Inter } from 'next/font/google'
 import './globals.css'
+import Navbar from '../components/navbar/Navbar'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin']
-})
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin']
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+  weight: ['400', '500', '700', '800', '900']
 })
 
 export const metadata: Metadata = {
@@ -28,7 +25,7 @@ export default function RootLayout ({
     <ClerkProvider>
       <html lang='en'>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased h-dvh flex flex-col text-start items-start justify-start`}
+          className={`${inter.variable} antialiased h-dvh flex flex-col text-start items-start justify-start`}
         >
           <Navbar />
           {children}
