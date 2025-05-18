@@ -17,12 +17,15 @@ enum ImportanceLevel {
   One
   Two
   Three
+  Four
+  Five
 }
 
 model Record {
-  id               Int             @id @default(autoincrement())
+  id               String           @id @default(cuid())
   title            String
   description      String
-  importance_level ImportanceLevel? @default(One)
-  createdAt        DateTime        @default(now())
+  importance_level ImportanceLevel @default(One)
+  createdAt        DateTime         @default(now())
+  userId           String
 }

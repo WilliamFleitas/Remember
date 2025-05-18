@@ -15,7 +15,7 @@ export default function StandardButton ({
     <button
       type={buttonType}
       onClick={handleClick}
-      className='flex flex-row w-fit border px-4 py-2'
+      className='flex flex-row w-fit border border-primary-border px-4 py-2 rounded-md'
     >
       {content}
     </button>

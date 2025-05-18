@@ -7,10 +7,11 @@
   --text-sm: 0.75rem;
   --text-base: 0.8rem;
   --text-lg: 0.9rem;
-  --text-xl: 0.95rem;
-  --text-2xl: 1rem;
-  --text-3xl: 1.15rem;
-  --text-4xl: 1.25rem;
+  --text-xl: 1rem;
+  --text-xxl: 1.1rem;
+  --text-2xl: 1.3rem;
+  --text-3xl: 1.4rem;
+  --text-4xl: 1.6rem;
   /* fontsize */
 
   /* screens */
@@ -24,9 +25,11 @@
 
   /* colors */
   --color-primary-decoration: #5f014f;
-  --color-primary-background: #1C1C1C;
-  --color-secondary-background: #4d4d4d;
-  --color-secondary-background-hover: #463636;
+  --color-primary-background: #141414;
+  --color-secondary-background: #3C3C3C;
+  --color-tertiary-background: #222222;
+  --color-primary-border: #2e2e2e;
+  --color-secondary-border: #3a3a3a;
   --color-danger: #940108;
   --color-danger-hover: #660005;
   --color-success: #048100;
@@ -45,8 +48,12 @@
   }
 } */
 
+:root {
+  --font-inter: 'Inter', sans-serif;
+}
+
 body {
   background-color: var(--color-primary-background);
   color: #ffffff;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter);
 }

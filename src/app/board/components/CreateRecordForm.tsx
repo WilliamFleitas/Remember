@@ -3,13 +3,16 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import createRecordCall from '@/src/libs/apiRequests/createRecordCall'
+import { useRouter } from 'next/navigation'
 
 const recordSchema = z.object({
   title: z.string().trim().min(1, 'Title is required'),
   description: z.string().trim().min(1, 'Description is required'),
-  importance_level: z.enum(['One', 'Two', 'Three'], {
+  importance_level: z.enum(['One', 'Two', 'Three', 'Four', 'Five'], {
     errorMap: () => ({
-      message: 'Importance level must be "One", "Two", or "Three"'
+      message:
+        'Importance level must be "One", "Two", "Three", "Four" or "Five"'
     })
   })
 })
@@ -17,6 +20,7 @@ const recordSchema = z.object({
 type RecordFormData = z.infer<typeof recordSchema>
 
 export default function CreateRecordForm () {
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -25,9 +29,29 @@ export default function CreateRecordForm () {
     resolver: zodResolver(recordSchema)
   })
 
-  const onSubmit = handleSubmit(async (formData) => {
-    console.log("from", formData)
-  })
+  const onSubmit = handleSubmit(
+    async ({ title, description, importance_level }) => {
+      try {
+        const response = await createRecordCall({
+          title,
+          description,
+          importance_level
+        })
+
+        if (!response.success) {
+          throw Error(response.error)
+        } else {
+          console.log(
+            'Record creado, hay que actualizar la lista de records',
+            response
+          )
+          router.refresh()
+        }
+      } catch (error) {
+        console.log('error', error)
+      }
+    }
+  )
 
   return (
     <div className='p-8 max-w-lg mx-auto '>
@@ -91,6 +115,8 @@ export default function CreateRecordForm () {
             <option value='One'>One</option>
             <option value='Two'>Two</option>
             <option value='Three'>Three</option>
+            <option value='Four'>Four</option>
+            <option value='Five'>Five</option>
           </select>
           {errors.importance_level && (
             <span className='text-red-500 text-sm'>
