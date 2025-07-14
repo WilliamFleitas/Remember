@@ -1,23 +1,26 @@
 import {
   ApiResponse,
-  CreateRecordProps,
+  CreateRecordType,
   RecordType
-} from '@/src/app/globalTypes/globalTypes'
+} from '@/src/globalTypes/globalTypes'
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
 
 export default async function createRecordCall ({
   title,
   description,
-  importance_level
-}: CreateRecordProps): Promise<ApiResponse<RecordType>> {
+  importance_level,
+  favorite
+}: CreateRecordType): Promise<ApiResponse<RecordType>> {
   try {
     const response = await fetch(`${BASE_URL}/api/records`, {
       method: 'POST',
       body: JSON.stringify({
         title,
         description,
-        importance_level
+        importance_level,
+        favorite,
+        categories: []
       }),
       headers: {
         'Content-Type': 'application/json'

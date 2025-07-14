@@ -1,4 +1,4 @@
-import { ImportanceLevelType } from '@/src/app/globalTypes/globalTypes'
+import { ImportanceLevelType } from '@/src/globalTypes/globalTypes'
 
 interface ImportanceLevelPropsType {
   importance_level: ImportanceLevelType
@@ -22,7 +22,7 @@ const formatedLevel = {
     color: '#940108'
   },
   Five: {
-    label: "DON'T NEVER EVER FORGET",
+    label: "DON'T FORGET",
     color: '#660005'
   }
 }
@@ -31,7 +31,7 @@ export default function ImportanceLevel ({
 }: ImportanceLevelPropsType): React.JSX.Element {
   return (
     <small
-      className={` text-lg px-2 py-1 rounded-md font-bold uppercase`}
+      className={`w-fit text-lg px-2 py-1 rounded-md font-bold uppercase`}
       style={{
         backgroundColor: formatedLevel[importance_level].color
       }}

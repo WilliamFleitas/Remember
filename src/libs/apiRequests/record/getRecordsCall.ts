@@ -1,4 +1,4 @@
-import { ApiResponse, RecordType } from "@/src/app/globalTypes/globalTypes"
+import { ApiResponse, RecordType } from "@/src/globalTypes/globalTypes"
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
 

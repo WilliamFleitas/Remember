@@ -6,8 +6,18 @@ export interface RecordType {
   importance_level: ImportanceLevelType
   id: string
   createdAt: Date
+  favorite: boolean
+  categories: string[]
 }
-export type CreateRecordProps = Omit<RecordType, 'id' | "createdAt">
+export type CreateRecordType = Omit<RecordType, 'id' | 'createdAt' | 'categories'>
+
+
+export interface RecordCategoryType {
+  id: string
+  name: string
+}
+export type CreateCategoryType = Omit<RecordCategoryType, 'id'>
+
 
 export type ApiResponse<T> =
   | {

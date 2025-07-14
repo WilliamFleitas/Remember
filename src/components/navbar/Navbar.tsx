@@ -10,7 +10,12 @@ import NavRoutes from './NavRoutes'
 
 export default function Navbar () {
   return (
-    <header className='flex flex-row w-full h-fit justify-between items-center px-8 py-4 shadow-md border-b border-b-primary-decoration'>
+    <header
+      className='flex flex-row w-full h-fit justify-between items-center px-8 py-4 rounded-md border border-secondary-border/10'
+      style={{
+        boxShadow: 'inset 5px 5px 20px #0000008c'
+      }}
+    >
       <Link href={'/'} className='text-4xl font-black tracking-wider'>
         Remember
       </Link>

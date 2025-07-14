@@ -1,22 +1,26 @@
 'use client'
 
-import React from 'react'
+import React, { JSX, useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
+import StandardButton from '@/src/components/ui/button/StandardButton'
 
-interface CustomModalProps {
-  modalContent: React.JSX.Element
-  isOpen: boolean
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+interface ButtonModalProps {
+  buttonContent: string
+  modalContent: JSX.Element
 }
 
-export default function CustomModal ({
-  modalContent,
-  isOpen,
-  setIsOpen
-}: CustomModalProps): React.JSX.Element {
+export default function ButtonModal ({
+  buttonContent,
+  modalContent
+}: ButtonModalProps): JSX.Element {
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <>
+      <StandardButton
+        content={buttonContent}
+        handleClick={() => setIsOpen(true)}
+      />
       <Dialog
         open={isOpen}
         onClose={() => setIsOpen(false)}

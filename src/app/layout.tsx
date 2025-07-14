@@ -26,8 +26,10 @@ export default function RootLayout ({
       <html lang='en'>
         <body
           className={`${inter.variable} antialiased h-dvh flex flex-col text-start items-start justify-start`}
-        >
+        > 
+        <div className='flex flex-col w-full h-fit pb-[1.4rem]'>
           <Navbar />
+        </div>
           {children}
         </body>
       </html>

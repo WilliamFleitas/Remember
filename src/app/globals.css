@@ -56,4 +56,18 @@ body {
   background-color: var(--color-primary-background);
   color: #ffffff;
   font-family: var(--font-inter);
+  box-shadow: inset 15px 5px 20px #0000008c;
+  padding: 1.4rem;
+} 
+
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

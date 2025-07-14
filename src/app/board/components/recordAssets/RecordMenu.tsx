@@ -1,8 +1,14 @@
 'use client'
 
-import CustomMenu from '@/src/components/ui/menu/CustomMenu'
-import { useState } from 'react'
+import CustomMenu, { OptionsType } from '@/src/components/ui/menu/CustomMenu'
+import { ClickEvent } from '@szhsin/react-menu'
+import React, { useState } from 'react'
 import { HiOutlineEllipsisVertical } from 'react-icons/hi2'
+import { useRouter } from 'next/navigation'
+import UpdateRecordForm from '../UpdateRecordForm'
+import { RecordType } from '@/src/globalTypes/globalTypes'
+import CustomModal from '@/src/components/ui/modal/CustomModal'
+import deleteRecordCall from '@/src/libs/apiRequests/record/deleteRecordCall'
 
 const menuOptionsData = [
   {
@@ -17,12 +23,31 @@ const menuOptionsData = [
   }
 ]
 
-export default function RecordMenu () {
-  const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false)
+interface RecordMenuPropsType {
+  recordData: RecordType
+}
+export default function RecordMenu ({
+  recordData
+}: RecordMenuPropsType): React.JSX.Element {
+  const router = useRouter()
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  // const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false)
 
-  const handleMenuChange = (event, item) => {
-    console.log('asdasD2', event, item)
+  const handleMenuChange = async (
+    event: ClickEvent,
+    rowData?: OptionsType
+  ): Promise<void> => {
+    if (rowData) {
+      if (rowData.value === 'edit') {
+        setModalIsOpen(true)
+      } else if (rowData.value === 'delete') {
+        const response = await deleteRecordCall({ id: recordData.id })
+        console.log('delete response', response)
+        router.refresh()
+      }
+    }
   }
+
   return (
     <div>
       <CustomMenu
@@ -40,7 +65,12 @@ export default function RecordMenu () {
         shift={42}
         viewScroll={'auto'}
         menuWidthSize='small'
-        position={"auto"}
+        position={'auto'}
+      />
+      <CustomModal
+        isOpen={modalIsOpen}
+        setIsOpen={setModalIsOpen}
+        modalContent={<UpdateRecordForm recordData={recordData} />}
       />
     </div>
   )
