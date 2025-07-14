@@ -1,26 +1,20 @@
-import { NextResponse } from 'next/server'
-import { prisma } from '@/src/libs/prisma'
+import { getRecordCategories } from "@/src/libs/server/getRecordCategories"
 import { z } from 'zod'
-import { currentUser } from '@clerk/nextjs/server'
-import { getUserRecords } from '@/src/libs/server/getUserRecords'
+import { prisma } from '@/src/libs/prisma'
+import { currentUser } from "@clerk/nextjs/server"
+import { NextResponse } from "next/server"
 
-const createRecordSchema = z.object({
-  title: z.string().min(5),
-  description: z.string().min(5),
-  favorite: z.boolean(),
-  importance_level: z.enum(['One', 'Two', 'Three', 'Four', 'Five']),
-  categories: z.array(z.string())
+const categorySchema = z.object({
+  name: z.string().min(5),
 })
-const deleteRecordSchema = z.object({
+const deleteCategorySchema = z.object({
   id: z.string().cuid()
 })
-const updateRecordSchema = createRecordSchema
-  .partial()
-  .merge(deleteRecordSchema)
+const updateCategorySchema = categorySchema.merge(deleteCategorySchema)
 
 export async function GET (): Promise<Response> {
   try {
-    const response = await getUserRecords()
+    const response = await getRecordCategories()
 
     if (!response.success) {
       throw Error(response.error)
@@ -28,7 +22,7 @@ export async function GET (): Promise<Response> {
       return NextResponse.json(response, { status: 200 })
     }
   } catch (error: any) {
-    console.error('Error getting records:', error)
+    console.error('Error getting record categories:', error)
     return NextResponse.json(
       {
         success: false,
@@ -53,7 +47,7 @@ export async function POST (req: Request): Promise<Response> {
       )
     }
     const body = await req.json()
-    const parsed = createRecordSchema.safeParse(body)
+    const parsed = categorySchema.safeParse(body)
 
     if (!parsed.success) {
       const errorData = parsed.error?.errors[0]
@@ -69,16 +63,12 @@ export async function POST (req: Request): Promise<Response> {
       )
     }
 
-    const { title, description, importance_level, favorite, categories } = parsed.data
+    const { name } = parsed.data
 
-    const { id, createdAt } = await prisma.record.create({
+    const { id } = await prisma.recordCategories.create({
       data: {
-        title,
-        description,
-        importance_level,
-        userId: user.id,
-        favorite,
-        categories
+        name,
+        userId: user.id
       }
     })
 
@@ -86,19 +76,14 @@ export async function POST (req: Request): Promise<Response> {
       {
         success: true,
         data: {
-          title,
-          description,
-          importance_level,
-          createdAt,
-          id,
-          favorite,
-          categories
+          name,
+          id
         }
       },
       { status: 201 }
     )
   } catch (error: any) {
-    console.error('Error creating record:', error)
+    console.error('Error creating category:', error)
     return NextResponse.json(
       {
         success: false,
@@ -108,6 +93,7 @@ export async function POST (req: Request): Promise<Response> {
     )
   }
 }
+
 
 export async function PUT (req: Request): Promise<Response> {
   try {
@@ -120,7 +106,7 @@ export async function PUT (req: Request): Promise<Response> {
     }
 
     const body = await req.json()
-    const parsed = updateRecordSchema.safeParse(body)
+    const parsed = updateCategorySchema.safeParse(body)
 
     if (!parsed.success) {
       const errorData = parsed.error?.errors[0]
@@ -138,7 +124,7 @@ export async function PUT (req: Request): Promise<Response> {
 
     const { id, ...data } = parsed.data
 
-    const result = await prisma.record.updateMany({
+    const result = await prisma.recordCategories.updateMany({
       where: {
         id: id,
         userId: user.id
@@ -148,7 +134,7 @@ export async function PUT (req: Request): Promise<Response> {
 
     if (result.count === 0) {
       return NextResponse.json(
-        { success: false, error: 'There was an error Updating the Record' },
+        { success: false, error: 'There was an error Updating the Category' },
         { status: 404 }
       )
     }
@@ -156,7 +142,7 @@ export async function PUT (req: Request): Promise<Response> {
     return NextResponse.json(
       {
         success: true,
-        data: { message: 'The record was Updated successfully' }
+        data: { message: 'The Category was Updated successfully' }
       },
       { status: 200 }
     )
@@ -179,7 +165,7 @@ export async function DELETE (req: Request): Promise<Response> {
     }
 
     const body = await req.json()
-    const parsed = deleteRecordSchema.safeParse(body)
+    const parsed = deleteCategorySchema.safeParse(body)
     if (!parsed.success) {
       const errorData = parsed.error?.errors[0]
       const errorMessage = `${

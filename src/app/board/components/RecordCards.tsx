@@ -19,7 +19,12 @@ export default async function RecordCards () {
   }
 
   return (
-    <ul className='flex flex-row flex-wrap w-full text-start items-center justify-between gap-6'>
+    <ul
+      className='flex flex-row flex-wrap w-full text-start items-center justify-between gap-4 min-h-[23.45rem] max-h-[23.45rem] overflow-y-auto py-6 px-8 border border-secondary-border/10 rounded-tr-md rounded-b-md no-scrollbar'
+      style={{
+        boxShadow: 'inset 5px 10px 20px #0000008c'
+      }}
+    >
       {recordsData.data.length ? (
         recordsData.data.map(record => (
           <RecordCard key={record.id} recordData={record} />

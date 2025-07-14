@@ -22,10 +22,18 @@ enum ImportanceLevel {
 }
 
 model Record {
-  id               String           @id @default(cuid())
+  id               String          @id @default(cuid())
   title            String
   description      String
   importance_level ImportanceLevel @default(One)
-  createdAt        DateTime         @default(now())
+  createdAt        DateTime        @default(now())
   userId           String
+  favorite         Boolean         @default(false)
+  categories       String[]        @default([])
+}
+
+model RecordCategories {
+  id     String @id @default(cuid())
+  name   String
+  userId String
 }

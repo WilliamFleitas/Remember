@@ -1,4 +1,5 @@
-import { RecordType } from '@/src/app/globalTypes/globalTypes'
+
+import { RecordType } from '@/src/globalTypes/globalTypes'
 import ImportanceLevel from '@/src/components/ui/importanceLevel/ImportanceLevel'
 import dayjs from 'dayjs'
 import RecordMenu from './recordAssets/RecordMenu'
@@ -15,23 +16,25 @@ export default function RecordCard ({
   return (
     <li
       key={recordData.id}
-      className='flex flex-col w-full h-fit bg-tertiary-background rounded-md min-w-[30rem] max-w-[30rem] border border-secondary-border overflow-hidden isolate'
+      className='flex flex-col grow w-full fh:w-1/4 h-fit bg-tertiary-background rounded-md fh:min-w-[28rem] border border-secondary-border/50  overflow-hidden isolate' style={{
+        boxShadow: '2px 10px 15px #0000008c'
+      }}
     >
-      <div className='flex flex-row w-full h-fit '>
-
-        <div className='flex flex-col w-full h-fit bg-transparent nd px-6 py-4 rounded-br-xl rounded-bl-xl rounded-tr-xl rounded-tl-sm gap-3 border-b border-r border-secondary-border shadow shadow-primary-border'>
-          <h2 className='capitalize font-bold tracking-wider text-xxl! p-0 m-0'>
+      <div className='flex flex-row w-full h-fit text-start items-start justify-between'>
+        <div className='flex flex-col w-1/2 grow h-fit bg-transparent px-6 py-4 rounded-br-xl rounded-bl-xl rounded-tr-xl rounded-tl-sm gap-3 border border-secondary-border/10' style={{
+        boxShadow: 'inset 2px 15px 20px #0000008c'
+      }}>
+          <h2 className='capitalize font-bold tracking-wider text-xxl! p-0 m-0 break-words truncate'>
             {recordData.title}
           </h2>
-          <p className='capitalize italic text-xl! text-zinc-300'>{`" ${recordData.description} "`}</p>
+          <p className='flex capitalize italic text-xl! text-zinc-300'>{`" `} <span className=' break-words truncate flex'>{recordData.description}</span> {` "`}</p>
         </div>
 
-        <div className='pr-2'>
-          <RecordMenu />
+        <div className='flex flex-col w-fit pr-2'>
+          <RecordMenu recordData={recordData} />
         </div>
-  
       </div>
-  
+
       <div className='w-full h-fit flex flex-row px-6 py-4 text-start items-center justify-between'>
         <ImportanceLevel importance_level={recordData.importance_level} />
         <small>{recordDate}</small>
